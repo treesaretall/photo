@@ -1,8 +1,17 @@
-import { DndContext, closestCenter } from '@dnd-kit/core'
+import {
+  DndContext,
+  KeyboardSensor,
+  MouseSensor,
+  TouchSensor,
+  closestCenter,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core'
 import type { DragEndEvent } from '@dnd-kit/core'
 import {
   SortableContext,
   arrayMove,
+  sortableKeyboardCoordinates,
   useSortable,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable'
@@ -55,7 +64,7 @@ function PhotoRow({ photo, onSaveCaption, onDelete }: PhotoRowProps) {
         aria-label="Drag to reorder"
         {...attributes}
         {...listeners}
-        className="cursor-grab text-gray-400"
+        className="touch-none cursor-grab text-gray-400"
       >
         ⠿
       </button>
@@ -81,6 +90,22 @@ export default function AdminPhotoList({ seriesId, photos }: AdminPhotoListProps
   const deletePhoto = useDeletePhoto()
   const reorderPhotos = useReorderPhotos()
 
+  const sensors = useSensors(
+    useSensor(MouseSensor, {
+      // Require the mouse to move a few pixels before activating, so clicking
+      // the handle doesn't feel like it "sticks".
+      activationConstraint: { distance: 5 },
+    }),
+    useSensor(TouchSensor, {
+      // A short press-and-hold before activating so a normal scroll gesture
+      // starting on the drag handle isn't hijacked into a drag.
+      activationConstraint: { delay: 250, tolerance: 5 },
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    }),
+  )
+
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event
     if (!over || active.id === over.id) {
@@ -98,7 +123,7 @@ export default function AdminPhotoList({ seriesId, photos }: AdminPhotoListProps
   }
 
   return (
-    <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+    <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
       <SortableContext items={photos.map((photo) => photo.id)} strategy={verticalListSortingStrategy}>
         <ul>
           {photos.map((photo) => (
