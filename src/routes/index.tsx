@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import Layout from '../components/Layout'
+import ProtectedRoute from '../components/ProtectedRoute'
 import AdminDashboardPage from '../pages/AdminDashboardPage'
 import AdminLoginPage from '../pages/AdminLoginPage'
 import ContactsPage from '../pages/ContactsPage'
@@ -14,7 +15,9 @@ export default function AppRoutes() {
         <Route path="/info" element={<InfoPage />} />
         <Route path="/contacts" element={<ContactsPage />} />
         <Route path="/admin/login" element={<AdminLoginPage />} />
-        <Route path="/admin" element={<AdminDashboardPage />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/admin" element={<AdminDashboardPage />} />
+        </Route>
       </Route>
     </Routes>
   )

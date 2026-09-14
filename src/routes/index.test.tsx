@@ -16,6 +16,11 @@ vi.mock('../hooks/usePhotos', () => ({
   usePhotos: () => ({ data: [], isLoading: false, isError: false }),
 }))
 
+vi.mock('../stores/authStore', () => ({
+  useAuthStore: (selector: (state: { status: string; signOut: () => Promise<void> }) => unknown) =>
+    selector({ status: 'authenticated', signOut: vi.fn() }),
+}))
+
 function renderPath(path: string) {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } })
   render(
