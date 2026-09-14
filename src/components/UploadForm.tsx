@@ -23,6 +23,7 @@ export default function UploadForm({ series, status, errorMessage, onSubmit }: U
   const [caption, setCaption] = useState('')
 
   const isPending = status === 'pending'
+  const hasNoSeries = series.length === 0
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault()
@@ -32,6 +33,10 @@ export default function UploadForm({ series, status, errorMessage, onSubmit }: U
     }
 
     onSubmit({ seriesId, file, caption: caption.trim() === '' ? null : caption.trim() })
+  }
+
+  if (hasNoSeries) {
+    return <p className="text-sm text-gray-500">Create a series first, then you can upload photos to it.</p>
   }
 
   return (
@@ -75,7 +80,7 @@ export default function UploadForm({ series, status, errorMessage, onSubmit }: U
 
       <button
         type="submit"
-        disabled={isPending || series.length === 0}
+        disabled={isPending}
         className="mt-2 rounded bg-gray-900 px-4 py-2 text-white disabled:opacity-50"
       >
         {isPending ? 'Uploading…' : 'Upload photo'}

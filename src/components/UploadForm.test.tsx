@@ -62,4 +62,11 @@ describe('UploadForm', () => {
 
     expect(screen.getByRole('button', { name: 'Uploading…' })).toBeDisabled()
   })
+
+  it('shows a message instead of the form when there are no series', () => {
+    render(<UploadForm series={[]} status="idle" onSubmit={vi.fn()} />)
+
+    expect(screen.getByText('Create a series first, then you can upload photos to it.')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Upload photo' })).not.toBeInTheDocument()
+  })
 })
