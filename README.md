@@ -1,32 +1,36 @@
-# React + TypeScript + Vite
+# Photography Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A personal photography portfolio site: public pages for browsing photos by series, plus an admin dashboard for uploading, editing, deleting, and reordering photos.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Vite + React + TypeScript
+- Tailwind CSS
+- React Router (`HashRouter`)
+- Zustand (UI + auth state)
+- TanStack Query (server state, caching, optimistic updates)
+- Supabase (Postgres, Auth, Storage)
+- Vitest + React Testing Library
+- Storybook
 
-## React Compiler
+## Getting started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. Copy `.env.example` to `.env.local` and fill in your Supabase project URL and anon key.
+2. Run the SQL in `supabase/migrations/0001_init.sql` against your Supabase project (creates the `series`/`photos` tables, RLS policies, and the `photos` storage bucket).
+3. Create one admin user under Authentication → Users in the Supabase dashboard — that's the only account that can write data.
 
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```sh
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Scripts
+
+| Script | Description |
+| --- | --- |
+| `npm run dev` | Start the Vite dev server |
+| `npm run build` | Typecheck and build for production |
+| `npm run lint` | Run ESLint |
+| `npm run test` | Run the Vitest test suite |
+| `npm run storybook` | Start Storybook locally |
+| `npm run build-storybook` | Build the static Storybook site |
