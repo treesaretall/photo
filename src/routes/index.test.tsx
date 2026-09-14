@@ -34,7 +34,7 @@ function renderPath(path: string) {
 
 describe('AppRoutes', () => {
   it.each([
-    ['/info', 'Jane Doe'],
+    ['/info', 'Matthew Hurst'],
     ['/contacts', 'hello@example.com'],
     ['/admin/login', 'Admin Login'],
     ['/admin', 'Admin Dashboard'],
@@ -45,6 +45,6 @@ describe('AppRoutes', () => {
 
   it('renders the home page with an empty photo grid when there is no data', () => {
     renderPath('/')
-    expect(screen.getByText('Photography Portfolio')).toBeInTheDocument()
+    expect(screen.getByText('Matthew Hurst')).toBeInTheDocument()
   })
 })

@@ -7,6 +7,6 @@ describe('Footer', () => {
     render(<Footer />)
 
     const year = new Date().getFullYear()
-    expect(screen.getByText(`© ${year} Photography Portfolio. All rights reserved.`)).toBeInTheDocument()
+    expect(screen.getByText(`© ${year} Matthew Hurst. All rights reserved.`)).toBeInTheDocument()
   })
 })

@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
 
-const SITE_TITLE = 'Photography Portfolio'
+const SITE_TITLE = 'Matthew Hurst'
 
 export default function NavBar() {
   const { pathname } = useLocation()

@@ -35,11 +35,11 @@ function renderApp() {
 describe('App', () => {
   it('renders the home page at "/"', () => {
     renderApp()
-    expect(screen.getByText('Photography Portfolio')).toBeInTheDocument()
+    expect(screen.getByText('Matthew Hurst')).toBeInTheDocument()
   })
 
   it('renders the site name in the nav bar', () => {
     renderApp()
-    expect(screen.getByRole('link', { name: 'Photography Portfolio' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Matthew Hurst' })).toBeInTheDocument()
   })
 })

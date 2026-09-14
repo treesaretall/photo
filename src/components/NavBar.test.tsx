@@ -16,7 +16,7 @@ describe('NavBar', () => {
     renderAt('/')
 
     expect(screen.getByRole('link', { name: 'Info' })).toHaveAttribute('href', '/info')
-    expect(screen.getByRole('link', { name: 'Photography Portfolio' })).toHaveAttribute('href', '/')
+    expect(screen.getByRole('link', { name: 'Matthew Hurst' })).toHaveAttribute('href', '/')
     expect(screen.getByRole('link', { name: 'Contacts' })).toHaveAttribute('href', '/contacts')
   })
 
@@ -24,7 +24,7 @@ describe('NavBar', () => {
     renderAt('/info')
 
     expect(screen.queryByRole('link', { name: 'Info' })).not.toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Photography Portfolio' })).toHaveAttribute('href', '/')
+    expect(screen.getByRole('link', { name: 'Matthew Hurst' })).toHaveAttribute('href', '/')
     expect(screen.getByRole('link', { name: 'Contacts' })).toHaveAttribute('href', '/contacts')
   })
 
@@ -32,7 +32,7 @@ describe('NavBar', () => {
     renderAt('/contacts')
 
     expect(screen.queryByRole('link', { name: 'Contacts' })).not.toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Photography Portfolio' })).toHaveAttribute('href', '/')
+    expect(screen.getByRole('link', { name: 'Matthew Hurst' })).toHaveAttribute('href', '/')
     expect(screen.getByRole('link', { name: 'Info' })).toHaveAttribute('href', '/info')
   })
 })
