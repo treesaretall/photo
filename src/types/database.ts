@@ -22,21 +22,32 @@ export interface Database {
   public: {
     Tables: {
       series: {
-        Row: Series
+        Row: Pick<Series, keyof Series>
         Insert: Omit<Series, 'id' | 'created_at'> & {
           id?: string
           created_at?: string
         }
         Update: Partial<Omit<Series, 'id' | 'created_at'>>
+        Relationships: []
       }
       photos: {
-        Row: Photo
+        Row: Pick<Photo, keyof Photo>
         Insert: Omit<Photo, 'id' | 'created_at'> & {
           id?: string
           created_at?: string
         }
         Update: Partial<Omit<Photo, 'id' | 'created_at'>>
+        Relationships: [
+          {
+            foreignKeyName: 'photos_series_id_fkey'
+            columns: ['series_id']
+            referencedRelation: 'series'
+            referencedColumns: ['id']
+          },
+        ]
       }
     }
+    Views: Record<never, never>
+    Functions: Record<never, never>
   }
 }
