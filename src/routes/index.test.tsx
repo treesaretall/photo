@@ -35,12 +35,19 @@ function renderPath(path: string) {
 describe('AppRoutes', () => {
   it.each([
     ['/info', 'Matthew Hurst'],
-    ['/contacts', 'hello@example.com'],
     ['/admin/login', 'Admin Login'],
     ['/admin', 'Admin Dashboard'],
   ])('renders the correct page for %s', (path, heading) => {
     renderPath(path)
     expect(screen.getByRole('heading', { name: heading })).toBeInTheDocument()
+  })
+
+  it('renders the contacts page with a link to Instagram', () => {
+    renderPath('/contacts')
+    expect(screen.getByRole('link', { name: 'Instagram' })).toHaveAttribute(
+      'href',
+      'https://instagram.com/mwhurst',
+    )
   })
 
   it('renders the home page with an empty photo grid when there is no data', () => {
