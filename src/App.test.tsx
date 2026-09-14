@@ -1,24 +1,40 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import App from './App'
+
+vi.mock('./lib/imageUrl', () => ({
+  getImageUrl: (path: string) => `https://example.com/${path}`,
+}))
+
+vi.mock('./hooks/useSeries', () => ({
+  useSeries: () => ({ data: [], isLoading: false, isError: false }),
+}))
+
+vi.mock('./hooks/usePhotos', () => ({
+  usePhotos: () => ({ data: [], isLoading: false, isError: false }),
+}))
+
+function renderApp() {
+  const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } })
+  render(
+    <QueryClientProvider client={queryClient}>
+      <MemoryRouter initialEntries={['/']}>
+        <App />
+      </MemoryRouter>
+    </QueryClientProvider>,
+  )
+}
 
 describe('App', () => {
   it('renders the home page at "/"', () => {
-    render(
-      <MemoryRouter initialEntries={['/']}>
-        <App />
-      </MemoryRouter>,
-    )
-    expect(screen.getByText('Home')).toBeInTheDocument()
+    renderApp()
+    expect(screen.getByText('Photography Portfolio')).toBeInTheDocument()
   })
 
   it('renders the site name in the nav bar', () => {
-    render(
-      <MemoryRouter initialEntries={['/']}>
-        <App />
-      </MemoryRouter>,
-    )
-    expect(screen.getByText('Photography Portfolio')).toBeInTheDocument()
+    renderApp()
+    expect(screen.getByRole('link', { name: 'Photography Portfolio' })).toBeInTheDocument()
   })
 })
