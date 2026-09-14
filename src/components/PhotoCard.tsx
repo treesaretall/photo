@@ -17,7 +17,7 @@ export default function PhotoCard({ photo, seriesTitle, seriesLocation, seriesYe
         alt={photo.caption ?? seriesTitle}
         className="w-full object-cover"
       />
-      <p className="mt-1 text-sm text-gray-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100 max-[480px]:opacity-100">
+      <p className="mt-1 text-sm text-gray-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
         {seriesTitle} — {seriesLocation}, {seriesYear}
       </p>
     </button>
