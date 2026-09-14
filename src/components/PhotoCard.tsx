@@ -11,13 +11,13 @@ interface PhotoCardProps {
 
 export default function PhotoCard({ photo, seriesTitle, seriesLocation, seriesYear, onClick }: PhotoCardProps) {
   return (
-    <button type="button" onClick={onClick} className="block w-full text-left">
+    <button type="button" onClick={onClick} className="group block w-full text-left">
       <img
         src={getImageUrl(photo.medium_path)}
         alt={photo.caption ?? seriesTitle}
         className="w-full object-cover"
       />
-      <p className="mt-3 text-sm text-gray-500">
+      <p className="mt-1 text-sm text-gray-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100 max-[480px]:opacity-100">
         {seriesTitle} — {seriesLocation}, {seriesYear}
       </p>
     </button>

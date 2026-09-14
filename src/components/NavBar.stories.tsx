@@ -9,7 +9,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Site-wide header: the owner name links home on the left, with Info/Contacts links on the right. A static, prop-less component reused on every page.',
+          'Fixed, vertically-centered site nav: Info/site title/Contacts links rotated -90° for sideways reading, collapsing to a normal horizontal bar on narrow screens. A static, prop-less component reused on every page.',
       },
     },
   },

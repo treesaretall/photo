@@ -43,7 +43,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Lays out photos grouped by series in a responsive grid, rendering a PhotoCard per photo. Pure and driven entirely by the `groups` prop.',
+          'Flattens photos from every series into a single scattered, asymmetric mosaic (cycling through a pool of size/offset presets), rendering a PhotoCard per photo. Pure and driven entirely by the `groups` prop.',
       },
     },
   },

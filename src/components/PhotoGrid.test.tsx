@@ -40,12 +40,12 @@ const photos: Photo[] = [
 ]
 
 describe('PhotoGrid', () => {
-  it('renders a section per series with its photos', () => {
+  it('renders every photo from every group in a scattered layout', () => {
     render(<PhotoGrid groups={[{ series, photos }]} onPhotoClick={vi.fn()} />)
 
-    expect(screen.getByText('Quiet Places')).toBeInTheDocument()
     expect(screen.getByRole('img', { name: 'First photo' })).toBeInTheDocument()
     expect(screen.getByRole('img', { name: 'Second photo' })).toBeInTheDocument()
+    expect(screen.getAllByText('Quiet Places — Berlin, 2022')).toHaveLength(2)
   })
 
   it('calls onPhotoClick with the clicked photo id', () => {

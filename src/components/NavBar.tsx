@@ -1,19 +1,58 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
+
+const SITE_TITLE = 'Photography Portfolio'
 
 export default function NavBar() {
+  const { pathname } = useLocation()
+
+  if (pathname === '/') {
+    return (
+      <header className="menu">
+        <div className="menuRotate">
+          <div className="menulinkLeft">
+            <Link to="/info" className="menulink">
+              Info
+            </Link>
+          </div>
+          <div className="menulinkCenter">
+            <h1>
+              <Link to="/" className="menulink">
+                {SITE_TITLE}
+              </Link>
+            </h1>
+          </div>
+          <div className="menuRight">
+            <Link to="/contacts" className="menulink">
+              Contacts
+            </Link>
+          </div>
+        </div>
+      </header>
+    )
+  }
+
+  const isInfo = pathname === '/info'
+
   return (
-    <header className="flex items-center justify-between px-8 py-10">
-      <Link to="/" className="text-2xl font-medium tracking-tight text-gray-900">
-        Photography Portfolio
-      </Link>
-      <nav className="flex gap-8 text-sm text-gray-600">
-        <Link to="/info" className="hover:text-gray-900">
-          Info
-        </Link>
-        <Link to="/contacts" className="hover:text-gray-900">
-          Contacts
-        </Link>
-      </nav>
+    <header className="menu">
+      <div className="menuRotate">
+        <div className="menulinkLeft">
+          <Link to="/" className="menulink">
+            {SITE_TITLE}
+          </Link>
+        </div>
+        <div className="menuRight">
+          {isInfo ? (
+            <Link to="/contacts" className="menulink">
+              Contacts
+            </Link>
+          ) : (
+            <Link to="/info" className="menulink">
+              Info
+            </Link>
+          )}
+        </div>
+      </div>
     </header>
   )
 }
