@@ -58,17 +58,21 @@ function PhotoRow({ photo, onSaveCaption, onDelete }: PhotoRowProps) {
   }
 
   return (
-    <li ref={setNodeRef} style={style} className="flex items-center gap-4 border-b border-gray-200 py-3">
+    <li ref={setNodeRef} style={style} className="flex items-center gap-2 py-2 sm:gap-4 sm:py-3">
       <button
         type="button"
         aria-label="Drag to reorder"
         {...attributes}
         {...listeners}
-        className="touch-none cursor-grab text-gray-400"
+        className="touch-none cursor-grab px-1 text-gray-400"
       >
         ⠿
       </button>
-      <img src={getImageUrl(photo.thumb_path)} alt="" className="h-16 w-16 object-cover" />
+      <img
+        src={getImageUrl(photo.thumb_path)}
+        alt=""
+        className="h-12 w-12 shrink-0 rounded object-cover sm:h-16 sm:w-16"
+      />
       <input
         type="text"
         value={caption}
@@ -76,9 +80,9 @@ function PhotoRow({ photo, onSaveCaption, onDelete }: PhotoRowProps) {
         onBlur={handleBlur}
         placeholder="Caption"
         aria-label="Caption"
-        className="flex-1 rounded border border-gray-300 px-2 py-1 text-sm"
+        className="min-w-0 flex-1 rounded border border-gray-300 px-2 py-1 text-sm"
       />
-      <button type="button" onClick={handleDelete} className="text-sm text-red-600 underline">
+      <button type="button" onClick={handleDelete} className="shrink-0 text-sm text-red-600 underline">
         Delete
       </button>
     </li>
@@ -122,10 +126,14 @@ export default function AdminPhotoList({ seriesId, photos }: AdminPhotoListProps
     reorderPhotos.mutate({ seriesId, photoIds: reordered.map((photo) => photo.id) })
   }
 
+  if (photos.length === 0) {
+    return <p className="text-sm text-gray-500">No photos yet — upload one above.</p>
+  }
+
   return (
     <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
       <SortableContext items={photos.map((photo) => photo.id)} strategy={verticalListSortingStrategy}>
-        <ul>
+        <ul className="divide-y divide-gray-100">
           {photos.map((photo) => (
             <PhotoRow
               key={photo.id}

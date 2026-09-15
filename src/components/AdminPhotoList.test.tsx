@@ -56,6 +56,12 @@ afterEach(() => {
 })
 
 describe('AdminPhotoList', () => {
+  it('shows an empty-state message when there are no photos', () => {
+    render(<AdminPhotoList seriesId="s1" photos={[]} />)
+
+    expect(screen.getByText('No photos yet — upload one above.')).toBeInTheDocument()
+  })
+
   it('renders a row per photo with its caption', () => {
     render(<AdminPhotoList seriesId="s1" photos={photos} />)
 

@@ -39,7 +39,7 @@ function SeriesPhotos({ series }: { series: Series }) {
   }
 
   return (
-    <div className="mt-8">
+    <div className="rounded-lg border border-gray-200 p-4 sm:p-6">
       {isEditing ? (
         <EditSeriesForm
           series={series}
@@ -54,8 +54,14 @@ function SeriesPhotos({ series }: { series: Series }) {
           onCancel={() => setIsEditing(false)}
         />
       ) : (
-        <div className="flex items-center justify-between">
-          <h3 className="text-sm font-medium text-gray-900">{series.title}</h3>
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h3 className="text-sm font-medium text-gray-900">{series.title}</h3>
+            <p className="text-xs text-gray-500">
+              {series.location}, {series.year} · {(photos ?? []).length} photo
+              {(photos ?? []).length === 1 ? '' : 's'}
+            </p>
+          </div>
           <div className="flex gap-3">
             <button type="button" onClick={() => setIsEditing(true)} className="text-sm text-gray-600 underline">
               Edit
@@ -66,7 +72,9 @@ function SeriesPhotos({ series }: { series: Series }) {
           </div>
         </div>
       )}
-      <AdminPhotoList seriesId={series.id} photos={photos ?? []} />
+      <div className="mt-4">
+        <AdminPhotoList seriesId={series.id} photos={photos ?? []} />
+      </div>
     </div>
   )
 }
@@ -110,54 +118,62 @@ export default function AdminDashboardPage() {
         : 'idle'
 
   return (
-    <div className="px-8 py-8">
-      <div className="flex items-center justify-between">
+    <div className="mx-auto max-w-5xl px-6 py-8 sm:px-8">
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <h1 className="text-2xl font-medium text-gray-900">Admin Dashboard</h1>
         <button type="button" onClick={handleSignOut} className="text-sm text-gray-600 underline">
           Sign out
         </button>
       </div>
 
-      <section className="mt-10 max-w-md">
-        <h2 className="text-lg font-medium text-gray-900">Profile picture</h2>
-        <div className="mt-4">
-          <ProfilePictureForm
-            currentAvatarPath={profile?.avatar_path ?? null}
-            status={profilePictureStatus}
-            errorMessage={updateProfilePicture.error instanceof Error ? updateProfilePicture.error.message : null}
-            onSubmit={(file) =>
-              updateProfilePicture.mutate({ file, previousPath: profile?.avatar_path ?? null })
-            }
-          />
-        </div>
-      </section>
+      <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <section className="rounded-lg border border-gray-200 p-4 sm:p-6">
+          <h2 className="text-base font-semibold text-gray-900">Profile picture</h2>
+          <div className="mt-4">
+            <ProfilePictureForm
+              currentAvatarPath={profile?.avatar_path ?? null}
+              status={profilePictureStatus}
+              errorMessage={updateProfilePicture.error instanceof Error ? updateProfilePicture.error.message : null}
+              onSubmit={(file) =>
+                updateProfilePicture.mutate({ file, previousPath: profile?.avatar_path ?? null })
+              }
+            />
+          </div>
+        </section>
 
-      <section className="mt-16 max-w-md">
-        <h2 className="text-lg font-medium text-gray-900">Create a series</h2>
-        <div className="mt-4">
-          <CreateSeriesForm
-            status={createSeriesStatus}
-            errorMessage={createSeries.error instanceof Error ? createSeries.error.message : null}
-            onSubmit={(values) => createSeries.mutate(values)}
-          />
-        </div>
-      </section>
+        <section className="rounded-lg border border-gray-200 p-4 sm:p-6">
+          <h2 className="text-base font-semibold text-gray-900">Create a series</h2>
+          <div className="mt-4">
+            <CreateSeriesForm
+              status={createSeriesStatus}
+              errorMessage={createSeries.error instanceof Error ? createSeries.error.message : null}
+              onSubmit={(values) => createSeries.mutate(values)}
+            />
+          </div>
+        </section>
 
-      <section className="mt-16 max-w-md">
-        <h2 className="text-lg font-medium text-gray-900">Upload a photo</h2>
-        <div className="mt-4">
-          <UploadForm
-            series={series ?? []}
-            status={uploadStatus}
-            errorMessage={uploadPhoto.error instanceof Error ? uploadPhoto.error.message : null}
-            onSubmit={(values) => uploadPhoto.mutate(values)}
-          />
-        </div>
-      </section>
+        <section className="rounded-lg border border-gray-200 p-4 sm:p-6">
+          <h2 className="text-base font-semibold text-gray-900">Upload a photo</h2>
+          <div className="mt-4">
+            <UploadForm
+              series={series ?? []}
+              status={uploadStatus}
+              errorMessage={uploadPhoto.error instanceof Error ? uploadPhoto.error.message : null}
+              onSubmit={(values) => uploadPhoto.mutate(values)}
+            />
+          </div>
+        </section>
+      </div>
 
-      <section className="mt-16">
-        <h2 className="text-lg font-medium text-gray-900">Photos</h2>
-        {series?.map((s) => <SeriesPhotos key={s.id} series={s} />)}
+      <section className="mt-12">
+        <h2 className="text-base font-semibold text-gray-900">Photos</h2>
+        {series && series.length === 0 ? (
+          <p className="mt-4 text-sm text-gray-500">Create a series above to start adding photos.</p>
+        ) : (
+          <div className="mt-4 flex flex-col gap-6">
+            {series?.map((s) => <SeriesPhotos key={s.id} series={s} />)}
+          </div>
+        )}
       </section>
     </div>
   )
