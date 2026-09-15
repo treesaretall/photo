@@ -1,9 +1,9 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
-import type { Photo } from '../types/database'
-import PhotoCard from './PhotoCard'
+import type { Photo } from '../../src/types/database'
+import PhotoCard from '../../src/components/PhotoCard'
 
-vi.mock('../lib/imageUrl', () => ({
+vi.mock('../../src/lib/imageUrl', () => ({
   getImageUrl: (path: string) => `https://example.com/${path}`,
 }))
 

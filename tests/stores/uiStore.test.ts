@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it } from 'vitest'
-import { useUiStore } from './uiStore'
+import { useUiStore } from '../../src/stores/uiStore'
 
 afterEach(() => {
   useUiStore.setState({ lightboxOpenPhotoId: null })

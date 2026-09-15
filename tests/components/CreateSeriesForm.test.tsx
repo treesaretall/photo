@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
-import CreateSeriesForm from './CreateSeriesForm'
+import CreateSeriesForm from '../../src/components/CreateSeriesForm'
 
 describe('CreateSeriesForm', () => {
   it('calls onSubmit with trimmed title/location and a parsed year', () => {

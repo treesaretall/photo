@@ -1,13 +1,13 @@
 import { render, screen } from '@testing-library/react'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { describe, expect, it, vi } from 'vitest'
-import ProtectedRoute from './ProtectedRoute'
+import ProtectedRoute from '../../src/components/ProtectedRoute'
 
 const { authState } = vi.hoisted(() => ({
   authState: { status: 'loading' as 'loading' | 'authenticated' | 'unauthenticated' },
 }))
 
-vi.mock('../stores/authStore', () => ({
+vi.mock('../../src/stores/authStore', () => ({
   useAuthStore: (selector: (state: typeof authState) => unknown) => selector(authState),
 }))
 

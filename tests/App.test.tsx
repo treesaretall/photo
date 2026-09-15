@@ -2,21 +2,21 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { describe, expect, it, vi } from 'vitest'
-import App from './App'
+import App from '../src/App'
 
-vi.mock('./lib/imageUrl', () => ({
+vi.mock('../src/lib/imageUrl', () => ({
   getImageUrl: (path: string) => `https://example.com/${path}`,
 }))
 
-vi.mock('./hooks/useSeries', () => ({
+vi.mock('../src/hooks/useSeries', () => ({
   useSeries: () => ({ data: [], isLoading: false, isError: false }),
 }))
 
-vi.mock('./hooks/usePhotos', () => ({
+vi.mock('../src/hooks/usePhotos', () => ({
   usePhotos: () => ({ data: [], isLoading: false, isError: false }),
 }))
 
-vi.mock('./stores/authStore', () => ({
+vi.mock('../src/stores/authStore', () => ({
   useAuthStore: (selector: (state: { status: string; signOut: () => Promise<void> }) => unknown) =>
     selector({ status: 'unauthenticated', signOut: vi.fn() }),
 }))

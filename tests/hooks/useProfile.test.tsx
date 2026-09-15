@@ -2,12 +2,12 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { renderHook, waitFor } from '@testing-library/react'
 import type { ReactNode } from 'react'
 import { describe, expect, it, vi } from 'vitest'
-import type { Profile } from '../types/database'
-import { useProfile } from './useProfile'
+import type { Profile } from '../../src/types/database'
+import { useProfile } from '../../src/hooks/useProfile'
 
 const { fromMock } = vi.hoisted(() => ({ fromMock: vi.fn() }))
 
-vi.mock('../lib/supabaseClient', () => ({
+vi.mock('../../src/lib/supabaseClient', () => ({
   supabase: { from: fromMock },
 }))
 

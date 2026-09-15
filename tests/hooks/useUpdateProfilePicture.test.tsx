@@ -2,8 +2,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { renderHook, waitFor } from '@testing-library/react'
 import type { ReactNode } from 'react'
 import { describe, expect, it, vi } from 'vitest'
-import type { Profile } from '../types/database'
-import { useUpdateProfilePicture } from './useUpdateProfilePicture'
+import type { Profile } from '../../src/types/database'
+import { useUpdateProfilePicture } from '../../src/hooks/useUpdateProfilePicture'
 
 const { fromMock, uploadMock, removeMock, resizeImageMock } = vi.hoisted(() => ({
   fromMock: vi.fn(),
@@ -12,14 +12,14 @@ const { fromMock, uploadMock, removeMock, resizeImageMock } = vi.hoisted(() => (
   resizeImageMock: vi.fn(),
 }))
 
-vi.mock('../lib/supabaseClient', () => ({
+vi.mock('../../src/lib/supabaseClient', () => ({
   supabase: {
     from: fromMock,
     storage: { from: () => ({ upload: uploadMock, remove: removeMock }) },
   },
 }))
 
-vi.mock('../lib/resizeImage', () => ({
+vi.mock('../../src/lib/resizeImage', () => ({
   resizeImage: resizeImageMock,
 }))
 

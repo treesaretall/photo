@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
-import type { Series } from '../types/database'
-import EditSeriesForm from './EditSeriesForm'
+import type { Series } from '../../src/types/database'
+import EditSeriesForm from '../../src/components/EditSeriesForm'
 
 const series: Series = {
   id: 's1',

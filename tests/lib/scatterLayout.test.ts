@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { getScatterRows, splitVerticalOffset } from './scatterLayout'
+import { getScatterRows, splitVerticalOffset } from '../../src/lib/scatterLayout'
 
 describe('getScatterRows', () => {
   it('returns no rows for zero photos', () => {

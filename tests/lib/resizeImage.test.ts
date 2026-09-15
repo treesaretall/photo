@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { calculateResizedDimensions } from './resizeImage'
+import { calculateResizedDimensions } from '../../src/lib/resizeImage'
 
 describe('calculateResizedDimensions', () => {
   it('leaves dimensions unchanged when already within the max', () => {

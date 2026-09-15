@@ -2,15 +2,15 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { renderHook, waitFor } from '@testing-library/react'
 import type { ReactNode } from 'react'
 import { describe, expect, it, vi } from 'vitest'
-import type { Photo, Series } from '../types/database'
-import { useDeleteSeries } from './useDeleteSeries'
+import type { Photo, Series } from '../../src/types/database'
+import { useDeleteSeries } from '../../src/hooks/useDeleteSeries'
 
 const { fromMock, removeMock } = vi.hoisted(() => ({
   fromMock: vi.fn(),
   removeMock: vi.fn(),
 }))
 
-vi.mock('../lib/supabaseClient', () => ({
+vi.mock('../../src/lib/supabaseClient', () => ({
   supabase: {
     from: fromMock,
     storage: { from: () => ({ remove: removeMock }) },

@@ -8,7 +8,7 @@ const { signInWithPasswordMock, signOutMock, getSessionMock, onAuthStateChangeMo
   onAuthStateChangeMock: vi.fn(),
 }))
 
-vi.mock('../lib/supabaseClient', () => ({
+vi.mock('../../src/lib/supabaseClient', () => ({
   supabase: {
     auth: {
       signInWithPassword: signInWithPasswordMock,
@@ -19,7 +19,7 @@ vi.mock('../lib/supabaseClient', () => ({
   },
 }))
 
-const { useAuthStore } = await import('./authStore')
+const { useAuthStore } = await import('../../src/stores/authStore')
 
 const fakeSession = { access_token: 'token', user: { id: 'u1' } } as unknown as Session
 

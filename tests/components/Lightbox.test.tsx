@@ -1,10 +1,10 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { useUiStore } from '../stores/uiStore'
-import type { Photo } from '../types/database'
-import Lightbox from './Lightbox'
+import { useUiStore } from '../../src/stores/uiStore'
+import type { Photo } from '../../src/types/database'
+import Lightbox from '../../src/components/Lightbox'
 
-vi.mock('../lib/imageUrl', () => ({
+vi.mock('../../src/lib/imageUrl', () => ({
   getImageUrl: (path: string) => `https://example.com/${path}`,
 }))
 

@@ -1,8 +1,8 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { beforeAll, describe, expect, it, vi } from 'vitest'
-import ProfilePictureForm from './ProfilePictureForm'
+import ProfilePictureForm from '../../src/components/ProfilePictureForm'
 
-vi.mock('../lib/imageUrl', () => ({
+vi.mock('../../src/lib/imageUrl', () => ({
   getImageUrl: (path: string) => `https://example.com/${path}`,
 }))
 

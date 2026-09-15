@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import type { Photo } from '../types/database'
-import AdminPhotoList from './AdminPhotoList'
+import type { Photo } from '../../src/types/database'
+import AdminPhotoList from '../../src/components/AdminPhotoList'
 
 const { updateMutate, deleteMutate, reorderMutate } = vi.hoisted(() => ({
   updateMutate: vi.fn(),
@@ -9,19 +9,19 @@ const { updateMutate, deleteMutate, reorderMutate } = vi.hoisted(() => ({
   reorderMutate: vi.fn(),
 }))
 
-vi.mock('../lib/imageUrl', () => ({
+vi.mock('../../src/lib/imageUrl', () => ({
   getImageUrl: (path: string) => `https://example.com/${path}`,
 }))
 
-vi.mock('../hooks/useUpdatePhoto', () => ({
+vi.mock('../../src/hooks/useUpdatePhoto', () => ({
   useUpdatePhoto: () => ({ mutate: updateMutate }),
 }))
 
-vi.mock('../hooks/useDeletePhoto', () => ({
+vi.mock('../../src/hooks/useDeletePhoto', () => ({
   useDeletePhoto: () => ({ mutate: deleteMutate }),
 }))
 
-vi.mock('../hooks/useReorderPhotos', () => ({
+vi.mock('../../src/hooks/useReorderPhotos', () => ({
   useReorderPhotos: () => ({ mutate: reorderMutate }),
 }))
 

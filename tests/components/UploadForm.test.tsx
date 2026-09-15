@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
-import type { Series } from '../types/database'
-import UploadForm from './UploadForm'
+import type { Series } from '../../src/types/database'
+import UploadForm from '../../src/components/UploadForm'
 
 const series: Series[] = [
   { id: 's1', title: 'Quiet Places', location: 'Berlin', year: 2022, position: 0, created_at: '2020-01-01' },
