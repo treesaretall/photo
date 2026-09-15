@@ -1,7 +1,20 @@
+import { getImageUrl } from '../lib/imageUrl'
+import { useProfile } from '../hooks/useProfile'
+
 export default function InfoPage() {
+  const { data: profile } = useProfile()
+
   return (
     <div className="mx-auto max-w-2xl px-8 py-8">
-      <h1 className="text-2xl font-medium text-gray-900">Matthew Hurst</h1>
+      {profile?.avatar_path && (
+        <img
+          src={getImageUrl(profile.avatar_path)}
+          alt="Matthew Hurst"
+          className="h-32 w-32 rounded-full object-cover"
+        />
+      )}
+
+      <h1 className="mt-6 text-2xl font-medium text-gray-900">Matthew Hurst</h1>
       <p className="mt-1 text-sm text-gray-500">Photographer</p>
 
       <section className="mt-16">

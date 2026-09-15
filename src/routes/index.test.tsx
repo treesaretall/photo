@@ -16,6 +16,10 @@ vi.mock('../hooks/usePhotos', () => ({
   usePhotos: () => ({ data: [], isLoading: false, isError: false }),
 }))
 
+vi.mock('../hooks/useProfile', () => ({
+  useProfile: () => ({ data: { id: true, avatar_path: null, updated_at: '2020-01-01' }, isLoading: false, isError: false }),
+}))
+
 vi.mock('../stores/authStore', () => ({
   useAuthStore: (selector: (state: { status: string; signOut: () => Promise<void> }) => unknown) =>
     selector({ status: 'authenticated', signOut: vi.fn() }),

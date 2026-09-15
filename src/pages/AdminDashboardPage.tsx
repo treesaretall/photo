@@ -5,12 +5,16 @@ import CreateSeriesForm from '../components/CreateSeriesForm'
 import type { CreateSeriesStatus } from '../components/CreateSeriesForm'
 import EditSeriesForm from '../components/EditSeriesForm'
 import type { EditSeriesStatus } from '../components/EditSeriesForm'
+import ProfilePictureForm from '../components/ProfilePictureForm'
+import type { ProfilePictureStatus } from '../components/ProfilePictureForm'
 import UploadForm from '../components/UploadForm'
 import type { UploadStatus } from '../components/UploadForm'
 import { useCreateSeries } from '../hooks/useCreateSeries'
 import { useDeleteSeries } from '../hooks/useDeleteSeries'
 import { usePhotos } from '../hooks/usePhotos'
+import { useProfile } from '../hooks/useProfile'
 import { useSeries } from '../hooks/useSeries'
+import { useUpdateProfilePicture } from '../hooks/useUpdateProfilePicture'
 import { useUpdateSeries } from '../hooks/useUpdateSeries'
 import { useUploadPhoto } from '../hooks/useUploadPhoto'
 import { useAuthStore } from '../stores/authStore'
@@ -71,8 +75,10 @@ export default function AdminDashboardPage() {
   const signOut = useAuthStore((state) => state.signOut)
   const navigate = useNavigate()
   const { data: series } = useSeries()
+  const { data: profile } = useProfile()
   const createSeries = useCreateSeries()
   const uploadPhoto = useUploadPhoto()
+  const updateProfilePicture = useUpdateProfilePicture()
 
   async function handleSignOut() {
     await signOut()
@@ -95,6 +101,14 @@ export default function AdminDashboardPage() {
         ? 'success'
         : 'idle'
 
+  const profilePictureStatus: ProfilePictureStatus = updateProfilePicture.isPending
+    ? 'pending'
+    : updateProfilePicture.isError
+      ? 'error'
+      : updateProfilePicture.isSuccess
+        ? 'success'
+        : 'idle'
+
   return (
     <div className="px-8 py-8">
       <div className="flex items-center justify-between">
@@ -105,6 +119,20 @@ export default function AdminDashboardPage() {
       </div>
 
       <section className="mt-10 max-w-md">
+        <h2 className="text-lg font-medium text-gray-900">Profile picture</h2>
+        <div className="mt-4">
+          <ProfilePictureForm
+            currentAvatarPath={profile?.avatar_path ?? null}
+            status={profilePictureStatus}
+            errorMessage={updateProfilePicture.error instanceof Error ? updateProfilePicture.error.message : null}
+            onSubmit={(file) =>
+              updateProfilePicture.mutate({ file, previousPath: profile?.avatar_path ?? null })
+            }
+          />
+        </div>
+      </section>
+
+      <section className="mt-16 max-w-md">
         <h2 className="text-lg font-medium text-gray-900">Create a series</h2>
         <div className="mt-4">
           <CreateSeriesForm

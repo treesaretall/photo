@@ -18,6 +18,12 @@ export interface Photo {
   created_at: string
 }
 
+export interface Profile {
+  id: true
+  avatar_path: string | null
+  updated_at: string
+}
+
 export interface Database {
   public: {
     Tables: {
@@ -45,6 +51,12 @@ export interface Database {
             referencedColumns: ['id']
           },
         ]
+      }
+      profile: {
+        Row: Pick<Profile, keyof Profile>
+        Insert: never
+        Update: Partial<Pick<Profile, 'avatar_path' | 'updated_at'>>
+        Relationships: []
       }
     }
     Views: Record<never, never>
