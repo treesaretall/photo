@@ -103,6 +103,24 @@ const PRESETS: ScatterSlot[] = DESKTOP_PRESETS.map((desktop, index) => ({
   mobile: MOBILE_PRESETS[index],
 }))
 
+/**
+ * Splits a marginTop value into a real (always non-negative) flow margin and
+ * a visual-only offset. A negative margin-top on a flex item can shrink that
+ * item's margin-box height below zero, which collapses the row's rendered
+ * height toward zero and causes the next row to start at the same position —
+ * i.e. photos stacking on top of each other. That risk scales with how tall
+ * the photo actually renders, which depends on its real aspect ratio and is
+ * unknowable in advance (and is shortest, relatively, on narrow mobile
+ * viewports). Real margin can only ever add height, so it's safe; negative
+ * pull is applied via `transform` instead, which never affects layout.
+ */
+export function splitVerticalOffset(marginTop: string): { flowMarginTop: string; visualOffsetY: string } {
+  if (marginTop.startsWith('-')) {
+    return { flowMarginTop: '0vh', visualOffsetY: marginTop }
+  }
+  return { flowMarginTop: marginTop, visualOffsetY: '0vh' }
+}
+
 /** Number of photos per row, cycled alongside the presets above. */
 const ROW_SLOT_COUNTS = [2, 2, 1, 1, 1, 2, 2, 2, 1, 2, 3, 2, 2, 2, 1, 2, 2, 1, 2, 2]
 

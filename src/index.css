@@ -21,6 +21,7 @@ html {
   margin-top: var(--smt);
   margin-left: var(--sml);
   margin-bottom: var(--smb);
+  transform: translateY(var(--soy));
 }
 
 @media (max-width: 480px) {
@@ -29,6 +30,7 @@ html {
     margin-top: var(--smt-m);
     margin-left: var(--sml-m);
     margin-bottom: var(--smb-m);
+    transform: translateY(var(--soy-m));
   }
 }
 

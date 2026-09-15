@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { getScatterRows } from './scatterLayout'
+import { getScatterRows, splitVerticalOffset } from './scatterLayout'
 
 describe('getScatterRows', () => {
   it('returns no rows for zero photos', () => {
@@ -41,5 +41,25 @@ describe('getScatterRows', () => {
         expect(slot.mobile.marginLeft.length).toBeGreaterThan(0)
       }
     }
+  })
+
+  it('never lets a preset carry a negative real margin-top (row-collapse guard)', () => {
+    const rows = getScatterRows(35)
+    for (const row of rows) {
+      for (const slot of row) {
+        expect(Number.parseFloat(splitVerticalOffset(slot.desktop.marginTop).flowMarginTop)).toBeGreaterThanOrEqual(0)
+        expect(Number.parseFloat(splitVerticalOffset(slot.mobile.marginTop).flowMarginTop)).toBeGreaterThanOrEqual(0)
+      }
+    }
+  })
+})
+
+describe('splitVerticalOffset', () => {
+  it('keeps non-negative margins as real flow margin with no visual offset', () => {
+    expect(splitVerticalOffset('20vh')).toEqual({ flowMarginTop: '20vh', visualOffsetY: '0vh' })
+  })
+
+  it('moves negative margins to a visual-only offset, leaving zero real margin', () => {
+    expect(splitVerticalOffset('-24vh')).toEqual({ flowMarginTop: '0vh', visualOffsetY: '-24vh' })
   })
 })

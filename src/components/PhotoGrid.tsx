@@ -1,5 +1,5 @@
 import PhotoCard from './PhotoCard'
-import { getScatterRows } from '../lib/scatterLayout'
+import { getScatterRows, splitVerticalOffset } from '../lib/scatterLayout'
 import type { Photo, Series } from '../types/database'
 
 export interface PhotoGroup {
@@ -48,32 +48,39 @@ export default function PhotoGrid({ groups, onPhotoClick }: PhotoGridProps) {
     <div className="relative w-full overflow-x-hidden">
       {rowsWithPhotos.map((row, rowIndex) => (
         <div key={rowIndex} className="flex w-auto">
-          {row.map(({ slot, item }) => (
-            <div
-              key={item.photo.id}
-              className="scatter-item"
-              style={
-                {
-                  '--sw': slot.desktop.width,
-                  '--smt': slot.desktop.marginTop,
-                  '--sml': slot.desktop.marginLeft,
-                  '--smb': slot.desktop.marginBottom ?? '0',
-                  '--sw-m': slot.mobile.width,
-                  '--smt-m': slot.mobile.marginTop,
-                  '--sml-m': slot.mobile.marginLeft,
-                  '--smb-m': slot.mobile.marginBottom ?? '0',
-                } as React.CSSProperties
-              }
-            >
-              <PhotoCard
-                photo={item.photo}
-                seriesTitle={item.seriesTitle}
-                seriesLocation={item.seriesLocation}
-                seriesYear={item.seriesYear}
-                onClick={() => onPhotoClick(item.photo.id)}
-              />
-            </div>
-          ))}
+          {row.map(({ slot, item }) => {
+            const desktopOffset = splitVerticalOffset(slot.desktop.marginTop)
+            const mobileOffset = splitVerticalOffset(slot.mobile.marginTop)
+
+            return (
+              <div
+                key={item.photo.id}
+                className="scatter-item"
+                style={
+                  {
+                    '--sw': slot.desktop.width,
+                    '--smt': desktopOffset.flowMarginTop,
+                    '--soy': desktopOffset.visualOffsetY,
+                    '--sml': slot.desktop.marginLeft,
+                    '--smb': slot.desktop.marginBottom ?? '0',
+                    '--sw-m': slot.mobile.width,
+                    '--smt-m': mobileOffset.flowMarginTop,
+                    '--soy-m': mobileOffset.visualOffsetY,
+                    '--sml-m': slot.mobile.marginLeft,
+                    '--smb-m': slot.mobile.marginBottom ?? '0',
+                  } as React.CSSProperties
+                }
+              >
+                <PhotoCard
+                  photo={item.photo}
+                  seriesTitle={item.seriesTitle}
+                  seriesLocation={item.seriesLocation}
+                  seriesYear={item.seriesYear}
+                  onClick={() => onPhotoClick(item.photo.id)}
+                />
+              </div>
+            )
+          })}
         </div>
       ))}
     </div>
